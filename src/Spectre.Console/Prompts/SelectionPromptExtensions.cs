@@ -238,4 +238,24 @@ public static class SelectionPromptExtensions
         obj.Converter = displaySelector;
         return obj;
     }
+
+    /// <summary>
+    /// Sets whether or not show result is enabled.
+    /// If enabled, the prompt will show the selected result once an option is selected.
+    /// </summary>
+    /// <param name="obj">The prompt.</param>
+    /// <param name="enabled">Whether or not show result is enabled.</param>
+    /// <returns>The same instance so that multiple calls can be chained.</returns>
+    public static SelectionPrompt<T> ShowResult<T>(this SelectionPrompt<T> obj, bool enabled)
+        where T : notnull
+    {
+        if (obj is null)
+        {
+            throw new ArgumentNullException(nameof(obj));
+        }
+
+        obj.ShowResult = enabled;
+
+        return obj;
+    }
 }

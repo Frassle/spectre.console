@@ -277,4 +277,10 @@ public sealed class MultiSelectionPrompt<T> : IPrompt<List<T>>, IListPromptStrat
         // Combine all items
         return new Rows(list);
     }
+
+    /// <inheritdoc/>
+    IRenderable? IListPromptStrategy<T>.RenderResult(IAnsiConsole console, ListPromptItem<T> item)
+    {
+        return null;
+    }
 }

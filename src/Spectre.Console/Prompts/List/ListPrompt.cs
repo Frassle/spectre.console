@@ -69,6 +69,13 @@ internal sealed class ListPrompt<T>
         }
 
         hook.Clear();
+
+        var renderResult = _strategy.RenderResult(_console, state.Current);
+        if (renderResult != null)
+        {
+            _console.Write(renderResult);
+        }
+
         _console.Cursor.Show();
 
         return state;

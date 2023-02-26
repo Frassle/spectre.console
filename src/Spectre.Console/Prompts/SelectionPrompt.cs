@@ -48,6 +48,13 @@ public sealed class SelectionPrompt<T> : IPrompt<T>, IListPromptStrategy<T>
     public string? MoreChoicesText { get; set; }
 
     /// <summary>
+    /// Gets or sets a value indicating whether or not the prompt should
+    /// display the selected value or not.
+    /// Defaults to <c>false</c>.
+    /// </summary>
+    public bool ShowResult { get; set; }
+
+    /// <summary>
     /// Gets or sets the selection mode.
     /// Defaults to <see cref="SelectionMode.Leaf"/>.
     /// </summary>
@@ -182,5 +189,22 @@ public sealed class SelectionPrompt<T> : IPrompt<T>, IListPromptStrategy<T>
         }
 
         return new Rows(list);
+    }
+
+    /// <inheritdoc/>
+    IRenderable? IListPromptStrategy<T>.RenderResult(IAnsiConsole console, ListPromptItem<T> item)
+    {
+        if (!ShowResult)
+        {
+            return null;
+        }
+        var highlightStyle = HighlightStyle ?? new Style(foreground: Color.Blue);
+
+        var text = (Converter ?? TypeConverterHelper.ConvertToString)?.Invoke(item.Data) ?? item.Data.ToString() ?? "?";
+        text = text.EscapeMarkup();
+
+        var paragraph = MarkupParser.Parse(Title == null ? string.Empty : Title + " ");
+        paragraph.Append(text, highlightStyle);
+        return paragraph;
     }
 }

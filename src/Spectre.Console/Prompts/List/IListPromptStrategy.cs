@@ -33,4 +33,12 @@ internal interface IListPromptStrategy<T>
     /// <param name="items">The visible items.</param>
     /// <returns>A <see cref="IRenderable"/> representing the items.</returns>
     public IRenderable Render(IAnsiConsole console, bool scrollable, int cursorIndex, IEnumerable<(int Index, ListPromptItem<T> Node)> items);
+
+    /// <summary>
+    /// Optionally builds a <see cref="IRenderable"/> from the selected option.
+    /// </summary>
+    /// <param name="console">The console.</param>
+    /// <param name="item">The selected item.</param>
+    /// <returns>A <see cref="IRenderable"/> representing the selected item, or null to not render a result.</returns>
+    public IRenderable? RenderResult(IAnsiConsole console, ListPromptItem<T> item);
 }

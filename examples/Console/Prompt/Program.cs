@@ -25,6 +25,7 @@ namespace Prompt
 
             WriteDivider("Lists");
             var fruit = AskFruit();
+            var animal = AskAnimal();
 
             WriteDivider("Choices");
             var sport = AskSport();
@@ -52,6 +53,7 @@ namespace Prompt
                 .BorderColor(Color.Grey)
                 .AddRow("[grey]Name[/]", name)
                 .AddRow("[grey]Favorite fruit[/]", fruit)
+                .AddRow("[grey]Favorite animal[/]", animal)
                 .AddRow("[grey]Favorite sport[/]", sport)
                 .AddRow("[grey]Age[/]", age.ToString())
                 .AddRow("[grey]Password[/]", password)
@@ -115,7 +117,7 @@ namespace Prompt
                         .AddChoices(favorites));
             }
 
-            AnsiConsole.MarkupLine("Your selected: [yellow]{0}[/]", fruit);
+            AnsiConsole.MarkupLine("You selected: [yellow]{0}[/]", fruit);
             return fruit;
         }
 
@@ -176,6 +178,23 @@ namespace Prompt
             return AnsiConsole.Prompt(
                 new TextPrompt<string>("[grey][[Optional]][/] What is your [green]favorite color[/]?")
                     .AllowEmpty());
+        }
+
+        public static string AskAnimal()
+        {
+            var animals = new string[]
+            {
+                "Cat",
+                "Dog",
+                "Rabbit",
+                "Duck",
+            };
+
+            return AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("What's your favourite [green]animal[/]?")
+                    .ShowResult(true)
+                    .AddChoices(animals));
         }
     }
 }
